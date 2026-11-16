@@ -1,13 +1,7 @@
 ﻿TECHSTORE - TERCER EXAMEN PRÁCTICO (UNIDAD III)
 ================================================
 
-Proyecto base: TechStore de la Semana 12 (EP2). Se agregó lo visto en las semanas 14 a 17:
-- Semana 14: ASP.NET Core Identity, roles Administrador / Vendedor / Cliente,
-  [Authorize] y [Authorize(Roles = "...")], RoleManager y UserManager en Program.cs
-- Semana 15: ILogger<T>, try / catch / finally, página de error personalizada,
-  página de acceso denegado y Partial Views
-- Semana 16: View Component y proyecto de pruebas TechStore.Tests (xUnit + Moq + EF InMemory)
-- Semana 17: reporte PDF (QuestPDF) y exportación a Excel (ClosedXML)
+Proyecto base: TechStore 
 
 PASOS PARA EJECUTAR
 -------------------
