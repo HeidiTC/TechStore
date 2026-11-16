@@ -1,0 +1,27 @@
+﻿@model TechStore.Models.Producto
+@{
+    ViewData["Title"] = "Detalle del producto";
+    var puedeEditar = User.IsInRole("Administrador") || User.IsInRole("Vendedor");
+}
+<h2>@Model.Nombre</h2>
+
+<dl class="row">
+    <dt class="col-sm-3">ID</dt>
+    <dd class="col-sm-9">@Model.ID</dd>
+    <dt class="col-sm-3">Descripción</dt>
+    <dd class="col-sm-9">@Model.Descripcion</dd>
+    <dt class="col-sm-3">Precio</dt>
+    <dd class="col-sm-9">$@Model.Precio.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)</dd>
+    <dt class="col-sm-3">Categoría</dt>
+    <dd class="col-sm-9">@Model.Categoria?.Nombre</dd>
+    <dt class="col-sm-3">Stock</dt>
+    <dd class="col-sm-9">@Model.Stock</dd>
+    <dt class="col-sm-3">Estado</dt>
+    <dd class="col-sm-9">@(Model.Estado ? "Activo" : "Inactivo")</dd>
+</dl>
+
+@if (puedeEditar)
+{
+    <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-warning">Editar</a>
+}
+<a asp-action="Index" class="btn btn-secondary">Volver al listado</a>

@@ -1,0 +1,77 @@
+﻿@* Unidad 3 - Partial View: menú de navegación según el rol del usuario.
+   Se usa en _Layout con <partial name="_Menu" />.
+   Cada opción solo aparece si el usuario tiene el rol que la puede usar. *@
+@{
+    var esAdmin = User.IsInRole("Administrador");
+    var esVendedor = User.IsInRole("Vendedor");
+    var rolActual = esAdmin ? "Administrador" : esVendedor ? "Vendedor" : "Cliente";
+}
+
+<ul class="navbar-nav me-auto">
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Inicio</a>
+    </li>
+
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        @* Los tres roles pueden consultar productos *@
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Productos" asp-action="Index">Productos</a>
+        </li>
+
+        if (esAdmin)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Categorias" asp-action="Index">Categorías</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Usuarios" asp-action="Index">Usuarios y roles</a>
+            </li>
+        }
+
+        if (esAdmin || esVendedor)
+        {
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reportes</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" asp-controller="Reportes" asp-action="VerPdf" target="_blank">Ver reporte PDF</a></li>
+                    <li><a class="dropdown-item" asp-controller="Reportes" asp-action="DescargarPdf">Descargar PDF</a></li>
+                    <li><a class="dropdown-item" asp-controller="Reportes" asp-action="ExportarExcel">Exportar a Excel</a></li>
+                </ul>
+            </li>
+        }
+    }
+
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Home" asp-action="Contacto">Contáctenos</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Home" asp-action="Acerca">Acerca de nosotros</a>
+    </li>
+</ul>
+
+<ul class="navbar-nav">
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <li class="nav-item d-flex align-items-center me-2">
+            <span class="navbar-text text-dark">
+                Hola, <strong>@User.Identity.Name</strong>
+                <span class="badge bg-secondary ms-1">@rolActual</span>
+            </span>
+        </li>
+        <li class="nav-item">
+            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                <button type="submit" class="btn btn-link nav-link text-dark">Cerrar sesión</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Iniciar sesión</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Registrarse</a>
+        </li>
+    }
+</ul>

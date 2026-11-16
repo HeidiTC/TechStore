@@ -1,0 +1,37 @@
+﻿@model ResumenInventarioViewModel
+
+@* Vista del View Component ResumenInventario (se usa en el listado de Productos) *@
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="card text-center border-primary h-100">
+            <div class="card-body">
+                <div class="text-muted small">Productos registrados</div>
+                <div class="fs-3 fw-bold text-primary">@Model.TotalProductos</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center border-success h-100">
+            <div class="card-body">
+                <div class="text-muted small">Productos activos</div>
+                <div class="fs-3 fw-bold text-success">@Model.ProductosActivos</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center border-warning h-100">
+            <div class="card-body">
+                <div class="text-muted small">Stock bajo (5 o menos)</div>
+                <div class="fs-3 fw-bold text-warning">@Model.StockBajo</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card text-center border-secondary h-100">
+            <div class="card-body">
+                <div class="text-muted small">Valor del inventario</div>
+                <div class="fs-3 fw-bold">$@Model.ValorInventario.ToString("N2")</div>
+            </div>
+        </div>
+    </div>
+</div>

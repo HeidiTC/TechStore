@@ -1,0 +1,15 @@
+﻿@model TechStore.Models.Producto
+@{
+    ViewData["Title"] = "Editar producto";
+}
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Edit" asp-route-id="@Model.ID" method="post">
+    <input type="hidden" asp-for="ID" />
+
+    @* La misma Partial View que usa Agregar producto *@
+    <partial name="_FormularioProducto" model="Model" />
+
+    <button type="submit" class="btn btn-success">Guardar cambios</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

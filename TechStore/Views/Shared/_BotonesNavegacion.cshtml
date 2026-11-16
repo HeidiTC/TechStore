@@ -1,0 +1,14 @@
+﻿@* Unidad 3 - Partial View: botones de regreso que usan la página de error y la de acceso denegado.
+   Así no se repite el mismo HTML en las dos vistas. *@
+<div class="d-flex flex-wrap gap-2">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Ir al inicio</a>
+
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <a asp-controller="Productos" asp-action="Index" class="btn btn-outline-secondary">Ver productos</a>
+    }
+    else
+    {
+        <a asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary">Iniciar sesión</a>
+    }
+</div>

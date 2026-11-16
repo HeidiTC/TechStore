@@ -1,0 +1,57 @@
+﻿TECHSTORE - TERCER EXAMEN PRÁCTICO (UNIDAD III)
+================================================
+
+Proyecto base: TechStore de la Semana 12 (EP2). Se agregó lo visto en las semanas 14 a 17:
+- Semana 14: ASP.NET Core Identity, roles Administrador / Vendedor / Cliente,
+  [Authorize] y [Authorize(Roles = "...")], RoleManager y UserManager en Program.cs
+- Semana 15: ILogger<T>, try / catch / finally, página de error personalizada,
+  página de acceso denegado y Partial Views
+- Semana 16: View Component y proyecto de pruebas TechStore.Tests (xUnit + Moq + EF InMemory)
+- Semana 17: reporte PDF (QuestPDF) y exportación a Excel (ClosedXML)
+
+PASOS PARA EJECUTAR
+-------------------
+1. Abrir TechStore.sln en Visual Studio.
+2. Revisar TechStore\appsettings.json -> ConnectionStrings:TechStoreDB.
+   Base nueva: TechStoreDB_EP3 en localhost\SQLEXPRESS (Trusted_Connection).
+   Si tu SQL Server tiene otro nombre, cámbialo en "Server=".
+3. Compilar la solución (Ctrl+Shift+B).
+4. Herramientas > Administrador de paquetes NuGet > Consola del Administrador de paquetes.
+   Proyecto predeterminado: TechStore. Ejecutar:
+
+   Add-Migration AgregarIdentity -Context TechStoreContext
+   Update-Database -Context TechStoreContext
+
+5. Ejecutar con F5. Al iniciar, Program.cs crea los roles, los usuarios de prueba
+   y 3 categorías con 7 productos de ejemplo.
+
+USUARIOS DE PRUEBA (contraseña de todos: TechStore123!)
+-------------------------------------------------------
+admin       admin@techstore.com       Administrador
+vendedor    vendedor@techstore.com    Vendedor
+cliente     cliente@techstore.com     Cliente
+Los usuarios que se registran desde "Registrarse" quedan con el rol Cliente.
+
+PERMISOS POR ROL
+----------------
+Función                         Administrador  Vendedor  Cliente
+Consultar productos             Sí             Sí        Sí (solo activos y con stock)
+Agregar / editar productos      Sí             Sí        No
+Eliminar productos              Sí             No        No
+Categorías                      Sí             No        No
+Reportes PDF y Excel            Sí             Sí        No
+Usuarios y roles                Sí             No        No
+
+PRUEBAS AUTOMATIZADAS
+---------------------
+Prueba > Explorador de pruebas > Ejecutar todas (20 pruebas)
+- ProductoServiceTests (9): consultar, obtener por ID, registrar, editar y eliminar
+- ProductosControllerTests (9): controlador con logger y TempData simulados (Moq)
+- ProductosIntegracionTests (2): CategoriaService + ProductoService + base de datos
+
+DÓNDE VER LOS LOGS
+------------------
+Visual Studio > Ver > Salida (Ctrl+Alt+O), "Mostrar salida de: ASP.NET Core Web Server"
+o la ventana de consola que se abre al ejecutar.
+Para probar el registro de errores: iniciar sesión como admin y en Inicio usar
+"Generar error de prueba" (muestra la página de error y registra LogError).

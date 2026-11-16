@@ -1,0 +1,14 @@
+﻿@model TechStore.Models.Producto
+@{
+    ViewData["Title"] = "Eliminar producto";
+}
+<h2>@ViewData["Title"]</h2>
+
+<p>¿Está seguro de eliminar este registro?</p>
+<p><strong>@Model.Nombre</strong> - @Model.Descripcion</p>
+<p class="text-muted">Categoría: @Model.Categoria?.Nombre | Stock: @Model.Stock</p>
+<form asp-action="Delete" asp-route-id="@Model.ID" method="post">
+    <input type="hidden" asp-for="ID" />
+    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

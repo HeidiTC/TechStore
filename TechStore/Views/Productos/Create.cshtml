@@ -1,0 +1,13 @@
+﻿@model TechStore.Models.Producto
+@{
+    ViewData["Title"] = "Agregar producto";
+}
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Create" method="post">
+    @* Partial View con los campos del formulario *@
+    <partial name="_FormularioProducto" model="Model" />
+
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

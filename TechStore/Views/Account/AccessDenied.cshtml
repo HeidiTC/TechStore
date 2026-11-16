@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Acceso denegado";
+
+    var rolActual = User.IsInRole("Administrador") ? "Administrador"
+                  : User.IsInRole("Vendedor") ? "Vendedor" : "Cliente";
+}
+
+@* Se muestra cuando el usuario inició sesión pero su rol no tiene permiso para la página *@
+<div class="aviso-contenedor">
+    <div class="card aviso-card">
+        <div class="aviso-encabezado bg-warning text-dark">
+            <div class="aviso-icono">🔒</div>
+            <h1>Acceso denegado</h1>
+            <p>No tienes permiso para esta operación</p>
+        </div>
+        <div class="card-body p-4">
+            <p>
+                Tu usuario <strong>@User.Identity?.Name</strong> tiene el rol
+                <span class="badge bg-secondary">@rolActual</span>, que no puede usar esta función.
+            </p>
+            @if (ViewBag.RutaSolicitada != null)
+            {
+                <p class="text-muted small">Ruta solicitada: <code>@ViewBag.RutaSolicitada</code></p>
+            }
+            <ul class="small text-muted">
+                <li><strong>Administrador:</strong> acceso completo.</li>
+                <li><strong>Vendedor:</strong> consultar, agregar y editar productos, y generar reportes.</li>
+                <li><strong>Cliente:</strong> solo consultar los productos disponibles.</li>
+            </ul>
+
+            <partial name="_BotonesNavegacion" />
+        </div>
+    </div>
+</div>

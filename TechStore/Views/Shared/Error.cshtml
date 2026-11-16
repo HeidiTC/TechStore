@@ -1,0 +1,44 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+
+    // Según el código HTTP cambia el título y el mensaje (sin mostrar detalles técnicos al usuario)
+    string titulo = "Algo salió mal";
+    string mensaje = "Ocurrió un problema al procesar tu solicitud. Intenta de nuevo en unos minutos.";
+
+    if (Model.CodigoEstado == 404)
+    {
+        titulo = "Página no encontrada";
+        mensaje = "El producto o la página que buscas no existe o fue eliminado.";
+    }
+    else if (Model.CodigoEstado == 400)
+    {
+        titulo = "Solicitud no válida";
+        mensaje = "Los datos enviados no son correctos. Revisa la información e inténtalo de nuevo.";
+    }
+}
+
+<div class="aviso-contenedor">
+    <div class="card aviso-card">
+        <div class="aviso-encabezado bg-danger">
+            <div class="aviso-icono">⚠️</div>
+            <h1>@titulo</h1>
+            @if (Model.CodigoEstado != null)
+            {
+                <p>Error @Model.CodigoEstado</p>
+            }
+        </div>
+        <div class="card-body p-4">
+            <p>@mensaje</p>
+
+            @* Partial View reutilizable con los botones de regreso *@
+            <partial name="_BotonesNavegacion" />
+
+            @* El código de referencia no es información sensible: sirve para buscar el error en los logs *@
+            @if (Model.ShowRequestId && Model.CodigoEstado == null)
+            {
+                <p class="text-muted small mt-3 mb-0">Código de referencia: @Model.RequestId</p>
+            }
+        </div>
+    </div>
+</div>

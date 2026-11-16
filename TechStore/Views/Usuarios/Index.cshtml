@@ -1,0 +1,49 @@
+﻿@model List<UsuarioRolViewModel>
+@{
+    ViewData["Title"] = "Usuarios y roles";
+    var roles = ViewBag.Roles as List<Microsoft.AspNetCore.Identity.IdentityRole> ?? new List<Microsoft.AspNetCore.Identity.IdentityRole>();
+}
+
+<h2>Usuarios y roles</h2>
+<p class="text-muted">
+    Administrador: acceso completo · Vendedor: consulta, agrega y edita productos y genera reportes ·
+    Cliente: solo consulta productos disponibles.
+</p>
+
+<div class="table-responsive">
+<table class="table table-striped align-middle">
+    <thead>
+        <tr><th>Usuario</th><th>Correo</th><th>Rol actual</th><th>Cambiar rol</th></tr>
+    </thead>
+    <tbody>
+    @foreach (var usuario in Model)
+    {
+        <tr>
+            <td>@usuario.UserName</td>
+            <td>@usuario.Email</td>
+            <td><span class="badge bg-secondary">@usuario.Rol</span></td>
+            <td>
+                @* No se permite que el administrador cambie su propio rol *@
+                @if (usuario.UserName != User.Identity?.Name)
+                {
+                    <form asp-action="CambiarRol" method="post" class="d-flex gap-2">
+                        <input type="hidden" name="id" value="@usuario.Id" />
+                        <select name="rol" class="form-select form-select-sm" style="max-width: 180px;">
+                            @foreach (var rol in roles)
+                            {
+                                <option value="@rol.Name" selected="@(rol.Name == usuario.Rol)">@rol.Name</option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+                    </form>
+                }
+                else
+                {
+                    <span class="text-muted small">(usuario actual)</span>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
